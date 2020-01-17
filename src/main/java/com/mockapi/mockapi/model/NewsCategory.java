@@ -26,6 +26,6 @@ public class NewsCategory {
     private String name;
 
     @OneToMany(mappedBy = "newsCategory",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "new-cate")
     private List<News> news;
 }

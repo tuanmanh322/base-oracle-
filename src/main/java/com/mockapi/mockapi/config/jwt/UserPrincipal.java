@@ -40,7 +40,7 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal create(Employee employee){
         List<GrantedAuthority> authorities = employee.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-        return new UserPrincipal(employee.getId(),employee.getFullname(),employee.getUsername(),
+        return new UserPrincipal(employee.getId(),employee.getFullName(),employee.getUsername(),
                 employee.getEmail(),employee.getPassword(),authorities);
     }
 

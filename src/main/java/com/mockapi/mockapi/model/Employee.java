@@ -1,13 +1,7 @@
 package com.mockapi.mockapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,11 +11,12 @@ import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Setter
+@Getter
 @Entity(name = "EMPLOYEE")
-//@Table
-public class Employee implements Serializable, UserDetails {
+//@JsonIgnoreProperties("inspection")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class Employee implements UserDetails,Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "EMPLOYEE_ID_SEQ")
     @SequenceGenerator(name = "EMPLOYEE_ID_SEQ",sequenceName = "AUTO_INCRE_SEQ_EMPLOYEE",initialValue = 1,allocationSize = 1)
@@ -41,16 +36,16 @@ public class Employee implements Serializable, UserDetails {
     private Date last_access;
 
     @Column(name = "FULLNAME")
-    private String fullname;
+    private String fullName;
 
     @Column(name = "CREATED_DATE")
-    private Date create_date;
+    private Date created_date;
 
     @Column(name = "EMAIL")
-    private String email;
+    private String Email;
 
     @Column(name = "PHONE_NUMBER")
-    private int phone;
+    private int phone_number;
 
     @Column(name = "SKYPE_ACCOUNT")
     private String skypeAcc;
@@ -58,7 +53,7 @@ public class Employee implements Serializable, UserDetails {
     @Column(name = "FACEBOOK")
     private String fbLink;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "EMPLOYEE_ROLE",
             joinColumns = @JoinColumn(name = "EMPLOYEE_ID",referencedColumnName = "ID",nullable = false),
@@ -68,38 +63,42 @@ public class Employee implements Serializable, UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+
     @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference (value = "issuesh-employee")
     private List<Issues_History> issues_histories;
 
     @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference (value = "absent-employee")
     private List<ABSENT> absents;
 
     @OneToMany(mappedBy = "employees",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference (value = "absent1-employee")
     private List<ABSENT> absents1;
 
     @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value = "news-employee")
     private List<News> news;
 
+    @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "ei-employee")
+    private List<Employee_Issue> employee_issues;
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "employee-team")
     private Team team;
 
 
     @ManyToOne
     @JoinColumn(name = "DEPARTMENT_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "employee-department")
     private Department department;
 
 
     @ManyToOne
     @JoinColumn(name = "POSITION_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "employee-position")
     private Position position;
 
 
@@ -119,16 +118,16 @@ public class Employee implements Serializable, UserDetails {
     private int graduationYear;
 
     @Column(name = "USER_TYPE")
-    private String user_type;
+    private String userType;
 
     @Column(name = "IS_ACTIVED")
-    private boolean isActive;
+    private boolean is_actived;
 
     @Column(name = "IS_LEADER")
-    private boolean isLeader;
+    private boolean is_leader;
 
     @Column(name = "IS_MANAGER")
-    private boolean isManager;
+    private boolean is_manager;
 
 
     @Column(name = "BIRTHDAY")
@@ -156,9 +155,8 @@ public class Employee implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.isActive;
+        return this.is_actived;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

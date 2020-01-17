@@ -1,6 +1,7 @@
 package com.mockapi.mockapi.service;
 
 import com.mockapi.mockapi.web.dto.NewsDTO;
+import com.mockapi.mockapi.web.dto.request.NewsRequest;
 import com.mockapi.mockapi.web.dto.response.GetListDataResponseDTO;
 import com.mockapi.mockapi.web.dto.response.GetSingleDataResponseDTO;
 
@@ -11,5 +12,5 @@ public interface ISNewsService {
 
     GetSingleDataResponseDTO<NewsDTO> update(NewsDTO newsDTO);
 
-    GetSingleDataResponseDTO<NewsDTO> add(NewsDTO newsDTO);
+    GetSingleDataResponseDTO<NewsDTO> add(NewsRequest newsRequest);
 }

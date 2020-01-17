@@ -40,7 +40,7 @@ public class EmployeeDTO extends BaseDTO {
 
     @NotNull(message = "createDate can't be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date create_date;
+    private Date created_date;
 
     @NotNull(message = "education can't be null")
     private String education;
@@ -61,18 +61,18 @@ public class EmployeeDTO extends BaseDTO {
     private String image;
 
 
-    private boolean isActive;
+    private boolean is_actived;
 
-    private boolean isLeader;
+    private boolean is_leader;
 
-    private boolean isManager;
+    private boolean is_manager;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date last_access;
 
     @NotNull(message = "phoneNumber can't be null")
 
-    private int phone;
+    private int phone_number;
 
     @NotNull(message = "skypeAcc can't be null")
     private String skypeAcc;
@@ -93,34 +93,37 @@ public class EmployeeDTO extends BaseDTO {
 
     private EmployeeToken employeeToken;
 
+    private Department department;
 
-
+    private Position position;
     public EmployeeDTO(Employee emp){
         this.id = emp.getId();
         this.address = emp.getAddress();
         this.birthday = emp.getBirthday();
-        this.create_date = emp.getCreate_date();
+        this.created_date = emp.getCreated_date();
         this.issues_histories = emp.getIssues_histories();
         this.education = emp.getEducation();
         this.email = emp.getEmail();
         this.faculty = emp.getFaculty();
         this.fbLink = emp.getFbLink();
-        this.fullname = emp.getFullname();
+        this.fullname = emp.getFullName();
         this.graduationYear = emp.getGraduationYear();
         this.image = emp.getImage();
-        this.isActive = emp.isActive();
-        this.isLeader = emp.isLeader();
-        this.isManager = emp.isManager();
+        this.is_actived = emp.is_actived();
+        this.is_leader = emp.is_leader();
+        this.is_manager = emp.is_manager();
         this.last_access = emp.getLast_access();
         this.password = emp.getPassword();
-        this.phone = emp.getPhone();
+        this.phone_number = emp.getPhone_number();
         this.news = emp.getNews();
         this.skypeAcc = emp.getSkypeAcc();
         this.absents = emp.getAbsents();
         this.university = emp.getUniversity();
-        this.user_type = emp.getUser_type();
+        this.user_type = emp.getUserType();
         this.username = emp.getUsername();
         this.authorities = emp.getRoles().stream()
                 .map(auth -> ((Role) auth).getName()).collect(Collectors.toList());
+        this.department = emp.getDepartment();
+        this.position = emp.getPosition();
     }
 }

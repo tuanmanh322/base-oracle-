@@ -26,6 +26,6 @@ public class Position {
     private String name;
 
     @OneToMany(mappedBy = "position",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "employee-position")
     private List<Employee> employees;
 }

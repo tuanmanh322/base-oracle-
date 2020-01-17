@@ -12,24 +12,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Component
-public class SqlUtil {
-    private static final Logger log = LoggerFactory.getLogger(SqlUtil.class);
-
-    public String getSqlQueryById(String module,
-                                  String queryId) {
-        File folder;
+public class SQLBuilder {
+    public static final String SQL_MODULE_EMPLOYEES = "employee";
+    public static final String SQL_MODULE_EMP_ROLE = "employee_role";
+    public static String getSqlQueryById(String module,
+                                         String queryId) {
+        File folder = null;
         try {
             folder = new ClassPathResource(
                     "sql" + File.separator + module + File.separator + queryId + ".sql").getFile();
+
             // Read file
             if (folder.isFile()) {
                 String sql = new String(Files.readAllBytes(Paths.get(folder.getAbsolutePath())));
                 return sql;
             }
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            return StringUtils.EMPTY;
+            return null;
         }
-        return StringUtils.EMPTY;
+        return null;
     }
 }

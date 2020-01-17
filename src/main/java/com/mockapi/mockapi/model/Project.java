@@ -2,10 +2,7 @@ package com.mockapi.mockapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,10 +10,9 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Getter
+@Setter
 @Entity(name = "PROJECT")
-//@Table
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PROJECT_ID_SEQ")
@@ -29,14 +25,14 @@ public class Project implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "STATUS_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "status-project")
     private Status status;
 
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+   // @JsonManagedReference(value = "teamp-project")
     private List<TeamProject> teamProjects;
 
     @OneToMany(mappedBy = "project",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+   // @JsonManagedReference
     private List<Issues> issues;
 }

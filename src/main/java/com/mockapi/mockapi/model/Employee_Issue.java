@@ -43,62 +43,16 @@ public class Employee_Issue implements Serializable {
 
     @ManyToOne
     @MapsId(value = "issueId")
-    @JsonBackReference
+    @JsonBackReference(value = "eissue-issues")
     private Issues issues;
 
     @ManyToOne
     @MapsId(value = "employeeId")
-    @JsonBackReference
+    @JsonBackReference(value = "ei-employee")
     private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "STATUS_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "ie-status")
     private Status status;
-
-//    public static class Employee_IssueId implements Serializable{
-//        @Column(insertable = false,updatable = false)
-//        private Employee employee_id;
-//
-//        @Column(insertable = false,updatable = false)
-//        private Issues issue_id;
-//
-//        public Employee_IssueId() {
-//        }
-//
-//        public Employee_IssueId(Employee employee_id, Issues issue_id) {
-//            this.employee_id = employee_id;
-//            this.issue_id = issue_id;
-//        }
-//
-//        public Employee getEmployee_id() {
-//            return employee_id;
-//        }
-//
-//        public void setEmployee_id(Employee employee_id) {
-//            this.employee_id = employee_id;
-//        }
-//
-//        public Issues getIssue_id() {
-//            return issue_id;
-//        }
-//
-//        public void setIssue_id(Issues issue_id) {
-//            this.issue_id = issue_id;
-//        }
-//
-//        @Override
-//        public boolean equals(Object o) {
-//            if (this == o) return true;
-//            if (!(o instanceof Employee_IssueId)) return false;
-//            Employee_IssueId that = (Employee_IssueId) o;
-//            return Objects.equals(employee_id, that.employee_id) &&
-//                    Objects.equals(issue_id, that.issue_id);
-//        }
-//
-//        @Override
-//        public int hashCode() {
-//            return Objects.hash(employee_id, issue_id);
-//        }
-//    }
 }

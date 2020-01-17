@@ -27,10 +27,10 @@ public class Team {
     private int leader_id;
 
     @OneToMany(mappedBy = "team",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    //@JsonManagedReference(value = "teamp-team")
     private List<TeamProject> teamProjects;
 
     @OneToMany(mappedBy = "team",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "employee-team")
     private List<Employee> employees;
 }

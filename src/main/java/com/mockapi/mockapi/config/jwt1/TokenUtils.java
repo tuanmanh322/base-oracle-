@@ -5,13 +5,18 @@ import com.mockapi.mockapi.model.Employee;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.mobile.device.Device;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -42,6 +47,13 @@ public class TokenUtils {
 
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
+    private SecretKey key = Keys.secretKeyFor(SIGNATURE_ALGORITHM);
+
+    private String base64Key = Encoders.BASE64.encode(key.getEncoded());
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
     /* Functions for generating new JWT token */
 
@@ -53,8 +65,10 @@ public class TokenUtils {
                 .setAudience(AUDIENCE_WEB)
                 .setIssuedAt(timeProvider.now())
                 .setExpiration(generateExpirationDate())
-                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+                .signWith(SIGNATURE_ALGORITHM, base64Key).compact();
     }
+
+
 
     private String generateAudience(Device device) {
         String audience = AUDIENCE_UNKNOWN;

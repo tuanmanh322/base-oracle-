@@ -1,10 +1,7 @@
 package com.mockapi.mockapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +9,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Getter
+@Setter
 @Entity(name = "TEAM_PROJECT")
 //@Table
 public class TeamProject implements Serializable {
@@ -22,7 +19,7 @@ public class TeamProject implements Serializable {
 
     @ManyToOne
     @MapsId(value = "idProject")
-    @JsonBackReference
+    @JsonBackReference(value = "teamp-project")
     private Project project;
 
     @Column(name = "START_DATE")
@@ -33,7 +30,7 @@ public class TeamProject implements Serializable {
 
     @ManyToOne
     @MapsId(value = "idTeam")
-    @JsonBackReference
+    @JsonBackReference(value = "teamp-team")
     private Team team;
 
 }

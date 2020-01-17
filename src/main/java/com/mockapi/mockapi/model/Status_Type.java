@@ -1,18 +1,15 @@
 package com.mockapi.mockapi.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Getter
+@Setter
 @Entity(name = "STATUS_TYPE")
 //@Table
 public class Status_Type {
@@ -26,6 +23,6 @@ public class Status_Type {
     private String name;
 
     @OneToMany(mappedBy = "status_type",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+   // @JsonManagedReference(value = "status-statusty")
     private List<Status> statuses;
 }

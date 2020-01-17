@@ -59,7 +59,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
             if (userName != null) {
                 Employee employee = employeeRepo.findByUsername(userName);
-                UserPrincipal principal = new UserPrincipal(employee.getId(),employee.getFullname(),employee.getUsername(),employee.getEmail(),employee.getPassword(), employee.getRoles());
+                UserPrincipal principal = new UserPrincipal(employee.getId(),employee.getFullName(),employee.getUsername(),employee.getEmail(),employee.getPassword(), employee.getRoles());
                 return new UsernamePasswordAuthenticationToken(userName, null, principal.getAuthorities());
             }
             return null;

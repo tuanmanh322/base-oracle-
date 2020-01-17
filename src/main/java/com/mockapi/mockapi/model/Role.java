@@ -1,6 +1,8 @@
 package com.mockapi.mockapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,8 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +24,18 @@ public class Role implements GrantedAuthority {
     @Column(name = "ID")
     private long id;
 
-    @Column(name = "NAME")
+    @Column(name = "ROLE_NAME")
     private String name;
 
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "EMPLOYEE_ROLE",
+//            joinColumns = @JoinColumn(name = "EMPLOYEE_ID",referencedColumnName = "ID",nullable = false),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "ROLE_ID",referencedColumnName = "ID",nullable = false
+//            )
+//    )
+//    private Set<Employee> employees = new HashSet<>();
 
     @Override
     public String getAuthority() {

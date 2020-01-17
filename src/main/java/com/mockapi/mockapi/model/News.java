@@ -45,11 +45,11 @@ public class News implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "EMPLOYEE_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "news-employee")
     private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "NEWSCATEGORY_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "new-cate")
     private NewsCategory newsCategory;
 }

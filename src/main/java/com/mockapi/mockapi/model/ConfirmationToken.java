@@ -17,16 +17,17 @@ public class ConfirmationToken {
     @Column(name = "ID")
     private long id;
 
-    @Column(name = "token", nullable = false, unique = true)
+    @Column(name = "TOKEN", nullable = false, unique = true)
     private String token;
 
-    @Column(name = "datetime_created", nullable = false)
+    @Column(name = "DATETIME_CREATED", nullable = false)
     private Date datetimeCreated;
 
-    @Column(name = "used", nullable = false)
+    @Column(name = "USED", nullable = false)
     private boolean used;
 
     @OneToOne
+    @JoinColumn(name = "EMPLOYEE_ID")
     private Employee employee;
 
 

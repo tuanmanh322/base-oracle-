@@ -3,6 +3,7 @@ package com.mockapi.mockapi.web.rest;
 
 import com.mockapi.mockapi.service.ISNewsService;
 import com.mockapi.mockapi.web.dto.NewsDTO;
+import com.mockapi.mockapi.web.dto.request.NewsRequest;
 import com.mockapi.mockapi.web.dto.response.GetListDataResponseDTO;
 import com.mockapi.mockapi.web.dto.response.GetSingleDataResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class NewsRest {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<GetSingleDataResponseDTO<NewsDTO>> add(@Valid @RequestBody NewsDTO newsDTO){
+    public ResponseEntity<GetSingleDataResponseDTO<NewsDTO>> add(@Valid @RequestBody NewsRequest newsDTO){
         GetSingleDataResponseDTO<NewsDTO> resp = isNewsService.add(newsDTO);
         if(resp == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

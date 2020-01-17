@@ -5,6 +5,7 @@ import com.mockapi.mockapi.config.jwt1.TokenUtils;
 import com.mockapi.mockapi.exception.ApiRequestException;
 import com.mockapi.mockapi.model.Employee;
 import com.mockapi.mockapi.model.EmployeeToken;
+import com.mockapi.mockapi.repository.EmployeeDAO;
 import com.mockapi.mockapi.repository.EmployeeRepo;
 import com.mockapi.mockapi.web.dto.EmployeeDTO;
 import com.mockapi.mockapi.web.dto.request.LoginRequest;
@@ -34,6 +35,9 @@ public class UserCustomDetail implements UserDetailsService {
     private EmployeeRepo employeeRepo;
 
     @Autowired
+    private EmployeeDAO employeeDAO;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -45,17 +49,17 @@ public class UserCustomDetail implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Employee employee = employeeRepo.findByUsername(username);
+        Employee employee = employeeDAO.findByUsername1(username);
         if(employee == null){
             throw new UsernameNotFoundException(username);
         }
-        return UserPrincipal.create(employee);
+        return employee;
     }
     @Transactional
     public UserDetails loadUserById(Long id){
         Employee employee = employeeRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with id: %s", id)));
 
-        return UserPrincipal.create(employee);
+        return employee;
     }
 
     public void ChangePassword(String oldPassword,String newPassword){

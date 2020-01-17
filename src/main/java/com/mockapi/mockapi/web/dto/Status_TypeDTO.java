@@ -10,9 +10,6 @@ import lombok.ToString;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class Status_TypeDTO{
 
     private long id;

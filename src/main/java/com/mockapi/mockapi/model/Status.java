@@ -2,10 +2,7 @@ package com.mockapi.mockapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,8 +10,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Getter
+@Setter
 @Entity(name = "STATUS")
 //@Table
 public class Status implements Serializable {
@@ -27,7 +24,7 @@ public class Status implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "TYPE_ID",nullable = true)
-    @JsonBackReference
+    @JsonBackReference(value = "status-statusty")
     private Status_Type status_type;
 
 
@@ -35,21 +32,21 @@ public class Status implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "status",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "status-project")
     private List<Project> projects;
 
     @OneToMany(mappedBy = "status",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "issues-status")
     private List<Issues> issues;
 
 
     @OneToMany(mappedBy = "status",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "absent-status")
     private List<ABSENT> absents;
 
 
     @OneToMany(mappedBy = "status",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "ie-status")
     private List<Employee_Issue> employee_issues;
 
 

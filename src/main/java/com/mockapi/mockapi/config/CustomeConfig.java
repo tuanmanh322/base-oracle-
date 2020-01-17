@@ -16,14 +16,4 @@ public class CustomeConfig {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
-
-    @Bean
-        public PasswordEncoder passwordEncoder(){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
-    }
-
-
-
-
 }

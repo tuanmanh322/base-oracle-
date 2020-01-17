@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @CrossOrigin("*")
 @Slf4j
 public class AuthRest {
@@ -46,4 +46,5 @@ public class AuthRest {
         userCustomDetail.ChangePassword(passwordChanger.getOldPassword(), passwordChanger.getNewPassword());
         return ResponseEntity.ok().build();
     }
+
 }

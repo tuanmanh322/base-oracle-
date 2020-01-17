@@ -6,6 +6,7 @@ import com.mockapi.mockapi.repository.NewsCategoryRepo;
 import com.mockapi.mockapi.repository.NewsRepo;
 import com.mockapi.mockapi.service.ISNewsService;
 import com.mockapi.mockapi.web.dto.NewsDTO;
+import com.mockapi.mockapi.web.dto.request.NewsRequest;
 import com.mockapi.mockapi.web.dto.response.GetListDataResponseDTO;
 import com.mockapi.mockapi.web.dto.response.GetSingleDataResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -86,12 +87,14 @@ public class SNewsImpl implements ISNewsService {
     }
 
     @Override
-    public GetSingleDataResponseDTO<NewsDTO> add(NewsDTO newsDTO) {
+    public GetSingleDataResponseDTO<NewsDTO> add(NewsRequest newsRequest) {
         GetSingleDataResponseDTO<NewsDTO> result = new GetSingleDataResponseDTO<>();
         try {
-            News news = modelMapper.map(newsDTO,News.class);
+            News news = modelMapper.map(newsRequest,News.class);
             news = newsRepo.save(news);
             result.setResult(modelMapper.map(news,NewsDTO.class));
+            log.info("response ----" +result.getMessage());
+            return  result;
         }catch (Exception ex){
             log.error(ex.getMessage(),ex);
             result.setResult(null);

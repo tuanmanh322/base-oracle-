@@ -23,10 +23,10 @@ public class Department {
         private long id;
 
         @OneToMany(mappedBy = "department",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-        @JsonManagedReference
+        @JsonManagedReference(value = "employee-department")
         private List<Employee> employees;
 
-        @Column(name = "NAME")
+        @Column(name = "DEPARTMENT_NAME")
         private String name;
 
         @Column(name = "LOCATION")

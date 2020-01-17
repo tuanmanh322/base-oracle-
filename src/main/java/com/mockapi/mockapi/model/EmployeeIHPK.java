@@ -15,10 +15,10 @@ import java.io.Serializable;
 @ToString
 @Embeddable
 public class EmployeeIHPK implements Serializable {
-    @Column(name = "employee_id")
+    @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
 
-    @Column(name = "employee_id")
+    @Column(name = "ISSUES_ID")
     private Long issueId;
 
 

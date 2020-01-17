@@ -20,7 +20,7 @@ public class SMailSenderImpl {
         message.setFrom("QLNS-Tim07");
         message.setTo(token.getEmployee().getEmail());
 
-        message.setText("Go to this page to activate your account http://localhost:4200/verify?token=" + token.getToken());
+        message.setText("Go to this page to activate your account http://localhost:8888/verify?token=" + token.getToken());
 
         javaMailSender.send(message);
     }

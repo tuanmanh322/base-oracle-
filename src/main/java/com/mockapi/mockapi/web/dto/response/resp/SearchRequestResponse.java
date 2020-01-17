@@ -1,22 +1,24 @@
-package com.mockapi.mockapi.web.dto.request;
+package com.mockapi.mockapi.web.dto.response.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mockapi.mockapi.model.Department;
 import com.mockapi.mockapi.model.Position;
+import com.mockapi.mockapi.model.Role;
 import com.mockapi.mockapi.model.Team;
-import com.mockapi.mockapi.web.dto.BaseDTO;
+import com.mockapi.mockapi.web.dto.response.BaseResponseDTO;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class SearchEmployeeRequest extends BaseDTO implements Serializable {
+public class SearchRequestResponse{
     private Long id;
 
     private String username;
@@ -47,7 +49,7 @@ public class SearchEmployeeRequest extends BaseDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "SearchEmployeeRequest{" +
+        return "SearchRequestResponse{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", Email='" + Email + '\'' +

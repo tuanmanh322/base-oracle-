@@ -2,10 +2,7 @@ package com.mockapi.mockapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,8 +11,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@ToString
+@Getter
+@Setter
 @Entity(name = "ISSUES_HISTORY")
 //@Table
 public class Issues_History implements Serializable {
@@ -29,12 +26,12 @@ public class Issues_History implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "ISSUE_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "ih_issues")
     private Issues issues;
 
     @ManyToOne
     @JoinColumn(name = "UPDATE_PERSON_ID")
-    @JsonBackReference
+    @JsonBackReference(value = "issuesh-employee")
     private Employee employee;
 
     @Column(name = "UPDATE_DATE")

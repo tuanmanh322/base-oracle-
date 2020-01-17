@@ -2,6 +2,7 @@ package com.mockapi.mockapi.config;
 
 //import com.mockapi.mockapi.config.jwt.JWTConfigurer;
 
+import com.mockapi.mockapi.config.firewall.RequestRejectedExceptionFilter;
 import com.mockapi.mockapi.config.jwt.JwtAuthenticationFilter;
 import com.mockapi.mockapi.config.jwt.JwtAuthorizationFilter;
 import com.mockapi.mockapi.config.jwt1.RestAuthenticationEntryPoint;
@@ -21,8 +22,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -36,9 +42,25 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
+    @Bean
+    public CorsFilter corsFilter() {
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setMaxAge(1800L);
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
+    }
     @Autowired
     private TokenUtils tokenUtils;
 
@@ -51,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Define the way of authentication
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -78,8 +100,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated().and()
 
                 // Intercept every request with filter
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class);
-
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class)
+                // loại bỏ firewall trong security
+                .addFilterBefore(new RequestRejectedExceptionFilter(), ChannelProcessingFilter.class);
         http.csrf().disable();
     }
 
@@ -95,4 +118,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.PUT, "/**/api/**");
         web.ignoring().antMatchers(HttpMethod.DELETE, "/**/api/**");
     }
+
+
 }
